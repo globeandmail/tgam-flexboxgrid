@@ -34,7 +34,7 @@ $line-height: 3px;
 }
 .burger-button__lines {
   @include burger-line;
-  margin-top: -($line-height / 2);
+  margin-top: -($line-height * 0.5);
   top: 50%;
   left: $button-padding;
   &:before,
