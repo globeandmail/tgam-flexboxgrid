@@ -52,12 +52,11 @@
     "gzip-size": "5.1.1",
     "js-beautify": "1.10.0",
     "js-yaml": "3.13.1",
-    "node-sass": "6.0.1",
-    "npm-check": "5.9.0",
     "path": "^0.12.7",
     "prismjs": "1.16.0",
     "require-dir": "1.2.0",
     "rimraf": "^2.6.2",
+    "sass": "1.36.0",
     "vinyl-buffer": "1.0.1",
     "vinyl-source-stream": "2.0.0",
     "vinyl-transform": "1.0.0"

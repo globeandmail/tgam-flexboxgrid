@@ -5,9 +5,9 @@ const autoprefixer = require("gulp-autoprefixer");
 const cleanCSS = require("gulp-clean-css");
 const rename = require("gulp-rename");
 const sourcemaps = require("gulp-sourcemaps");
-const nodeSass = require("node-sass");
 const gulpSass = require("gulp-sass");
-const sass = gulpSass(nodeSass);
+const dartSass = require("sass");
+const sass = gulpSass(dartSass);
 const siteConfig = require("../site-config.js");
 
 const sassPrecision = 2; // decimal places, default is 5
