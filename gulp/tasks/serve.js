@@ -2,7 +2,6 @@
 
 const gulp = require("gulp");
 const browserSync = require("browser-sync").create();
-const runSequence = require("run-sequence");
 const siteConfig = require("../site-config.js");
 
 /**
@@ -38,32 +37,24 @@ gulp.task("watch", function watchTask(done) {
     "./src/site/templates/*",
     "./src/site/pages/**/*",
     "./src/specimens/**/*",
-  ], function runWatchSequence() {
-    runSequence("templates", browserSync.reload);
-  });
+  ], gulp.series("templates", browserSync.reload));
 
   gulp.watch([
     "./gulp/tasks/styles.js",
     "./src/site/stylesheets/**/*.scss",
     "./src/patterns/**/*.scss",
-  ], function runWatchSequence() {
-    runSequence("styles", browserSync.reload);
-  });
+  ], gulp.series("styles", browserSync.reload));
 
   gulp.watch([
     "./gulp/tasks/scripts.js",
     "./src/site/javascripts/**/*.js",
     "./src/site/vendor/javascripts/**/*.js"
-  ], function runWatchSequence() {
-    runSequence("scripts", browserSync.reload);
-  });
+  ], gulp.series("scripts", browserSync.reload));
 
   gulp.watch([
     "./gulp/tasks/images.js",
     "./src/site/images/**/*",
-  ], function runWatchSequence() {
-    runSequence("images", browserSync.reload);
-  });
+  ], gulp.series("images", browserSync.reload));
 
   done();
 });

@@ -1,7 +1,6 @@
 "use strict";
 
 const gulp = require("gulp");
-const runSequence = require("run-sequence");
 const siteConfig = require("../site-config.js");
 
 /**
@@ -23,12 +22,4 @@ gulp.task("release:dist", function publishDistTask() {
 /**
  * Gateway task
  */
-gulp.task("release", function releaseTask(done) {
-  runSequence(
-    "release:docs",
-    "release:dist",
-    function onSequenceComplete() {
-      done();
-    }
-  );
-});
+gulp.task("release", gulp.series("release:docs", "release:dist"));

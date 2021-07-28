@@ -14,9 +14,4 @@ gulp.task("images:site", function imagesSiteTask() {
 /**
  * Gateway task
  */
-gulp.task("images", [
-  "images:site"
-],
-function imagesTask(done) {
-  done();
-});
+gulp.task("images", gulp.series("images:site"));

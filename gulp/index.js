@@ -3,62 +3,34 @@
 const gulp = require("gulp");
 const sassLint = require("gulp-sass-lint");
 const requireDir = require("require-dir");
-const runSequence = require("run-sequence");
 
 requireDir("./tasks", { recurse: true });
 
 /**
- * Default task
- */
-gulp.task("default", function defaultTask(done) {
-  runSequence(
-    "generate",
-    "launch",
-    function onSequenceComplete() {
-      done();
-    }
-  );
-});
-
-/**
  * Generate static website
  */
-gulp.task("generate", function generateTask(done) {
-  runSequence(
-    "clean",
-    "styles",
-    ["templates", "scripts", "images"],
-    function onSequenceComplete() {
-      done();
-    }
-  );
-});
+gulp.task("generate", gulp.series(
+  "clean",
+  "styles",
+  "templates",
+  "scripts",
+  "images"
+));
 
 /**
  * Launch local development server
  */
-gulp.task("launch", function launchTask(done) {
-  runSequence(
-    "serve",
-    "watch",
-    function onSequenceComplete() {
-      done();
-    }
-  );
-});
+gulp.task("launch", gulp.series("serve", "watch"));
+
+/**
+ * Default task
+ */
+gulp.task("default", gulp.series("generate", "launch"));
 
 /**
  * Publish to root docs folder and dist folder
  */
-gulp.task("publish", function publishTask(done) {
-  runSequence(
-    "generate",
-    "release",
-    function onSequenceComplete() {
-      done();
-    }
-  );
-});
+gulp.task("publish", gulp.series("generate", "release"));
 
 /**
  * Lint the SASS files

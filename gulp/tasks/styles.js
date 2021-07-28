@@ -5,8 +5,9 @@ const autoprefixer = require("gulp-autoprefixer");
 const cleanCSS = require("gulp-clean-css");
 const rename = require("gulp-rename");
 const sourcemaps = require("gulp-sourcemaps");
-const sass = require("gulp-sass");
-const runSequence = require("run-sequence");
+const nodeSass = require("node-sass");
+const gulpSass = require("gulp-sass");
+const sass = gulpSass(nodeSass);
 const siteConfig = require("../site-config.js");
 
 const sassPrecision = 2; // decimal places, default is 5
@@ -57,35 +58,14 @@ gulp.task("styles:specimen:min", function stylesSpecimenMinTask() {
 /**
  * Process the specimen styles
  */
-gulp.task("styles:specimen", function stylesSpecimenTask(done) {
-  runSequence(
-    "styles:specimen:sass",
-    "styles:specimen:min",
-    function onSequenceComplete() {
-      done();
-    }
-  );
-});
+gulp.task("styles:specimen", gulp.series("styles:specimen:sass", "styles:specimen:min"));
 
 /**
  * Process the site styles
  */
-gulp.task("styles:site", function stylesSpecimenTask(done) {
-  runSequence(
-    "styles:site:sass",
-    function onSequenceComplete() {
-      done();
-    }
-  );
-});
+gulp.task("styles:site", gulp.series("styles:site:sass"));
 
 /**
  * Gateway task
  */
-gulp.task("styles", [
-  "styles:specimen",
-  "styles:site"
-],
-function stylesTask(done) {
-  done();
-});
+gulp.task("styles", gulp.parallel("styles:specimen", "styles:site"));

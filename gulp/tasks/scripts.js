@@ -50,11 +50,8 @@ gulp.task("scripts:site:vendor", function scriptsSiteVendorTask() {
 /**
  * Gateway task
  */
-gulp.task("scripts", [
+gulp.task("scripts", gulp.parallel([
   "scripts:babel-polyfill",
   "scripts:site",
   "scripts:site:vendor"
-],
-function scriptsTask(done) {
-  done();
-});
+]));
