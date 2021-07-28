@@ -9,7 +9,6 @@ const beautifyHTML = require("js-beautify").html;
 const path = require("path");
 const Prism = require("prismjs");
 const rmdir = require("rimraf");
-const runSequence = require("run-sequence");
 const helpers = require("../helpers.js");
 const siteConfig = require("../site-config.js");
 const filesize = require("filesize");
@@ -29,7 +28,7 @@ let pack;
 /**
  * Initialization
  */
-gulp.task("templates:init", function templatesInitTask() {
+gulp.task("templates:init", function templatesInitTask(done) {
   // Load nav menu configuration file
   let config = helpers.loadConfigFile("./src/site/navigation.yml");
   if (config.primaryNav) {
@@ -49,6 +48,7 @@ gulp.task("templates:init", function templatesInitTask() {
   pageTemplate = handlebars.Handlebars.compile(
     fs.readFileSync("./src/site/templates/page.hbs", "utf8")
   );
+  done();
 });
 
 /**
@@ -254,19 +254,14 @@ gulp.task("templates:deinit", function templatesDeinitTask(done) {
 /**
  * Gateway task
  */
-gulp.task("templates", function templatesTask(done) {
-  runSequence(
-    "templates:init",
-    "templates:specimens:scss",
-    "templates:specimens:html",
-    "templates:specimens:pages",
-    "templates:site:pages",
-    "templates:deinit",
-    function onSequenceComplete() {
-      done();
-    }
-  );
-});
+gulp.task("templates", gulp.series(
+  "templates:init",
+  "templates:specimens:scss",
+  "templates:specimens:html",
+  "templates:specimens:pages",
+  "templates:site:pages",
+  "templates:deinit"
+));
 
 // Returns a copy of the original tree, with an "active" property added
 // to the object who's "path" property matches the search string
